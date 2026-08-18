@@ -1,0 +1,339 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-7">
+                <p class="badge-primary mb-3">
+                    <i class="fa fa-star me-1"></i>
+                    Welcome to Symphony Limited
+                </p>
+                <h1>
+                    Start Your <span>IT Career</span><br>
+                    With The Best Training
+                </h1>
+                <p class="mt-3 mb-4" style="color:#aaa; font-size:17px;">
+                    Symphony Limited offers world-class IT training programs.
+                    Learn from industry experts and launch your career
+                    in technology.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="/Home/Courses" class="btn btn-primary btn-lg px-4">
+                        <i class="fa fa-book me-2"></i>View Courses
+                    </a>
+                    <a href="/Home/Apply" class="btn btn-outline-primary btn-lg px-4">
+                        <i class="fa fa-user-plus me-2"></i>Apply Now
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 text-center mt-5 mt-lg-0">
+                <div style="background:linear-gradient(135deg,#e63946,#c1121f);
+                    border-radius:20px; padding:40px;
+                    display:inline-block;">
+                    <i class="fa fa-graduation-cap"
+                       style="font-size:120px; color:#fff; opacity:0.9;"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- STATS SECTION -->
+<section style="background:#1d1d2e; padding:40px 0;
+    border-bottom:1px solid #2a2a3e;">
+    <div class="container">
+        <div class="row text-center">
+
+            <div class="col-6 col-md-3 mb-3 mb-md-0">
+                <h2 style="color:#e63946; font-weight:700;">
+                    @ViewBag.TotalCourses+
+                </h2>
+                <p style="color:#aaa;">Courses</p>
+            </div>
+
+            <div class="col-6 col-md-3 mb-3 mb-md-0">
+                <h2 style="color:#e63946; font-weight:700;">
+                    @ViewBag.TotalStudents+
+                </h2>
+                <p style="color:#aaa;">Students</p>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <h2 style="color:#e63946; font-weight:700;">
+                    @ViewBag.TotalExams+
+                </h2>
+                <p style="color:#aaa;">Exams Conducted</p>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <h2 style="color:#e63946; font-weight:700;">
+                    @ViewBag.TotalBranches+
+                </h2>
+                <p style="color:#aaa;">Branches</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- COURSES SECTION -->
+<section style="padding:80px 0;">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                Our <span>Courses</span>
+            </h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="row g-4">
+            @if (ViewBag.Courses != null)
+            {
+                foreach (var course in ViewBag.Courses)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card-custom p-4 h-100">
+
+                            <div class="mb-3">
+                                <span style="background:#e63946;
+                                    border-radius:10px;
+                                    padding:12px 14px;">
+                                    <i class="fa fa-laptop-code"
+                                       style="color:#fff; font-size:22px;"></i>
+                                </span>
+                            </div>
+
+                            <h5 style="color:#fff; font-weight:600;">
+                                @course.Name
+                            </h5>
+
+                            <p style="color:#aaa; font-size:14px;">
+                                @course.Topics
+                            </p>
+
+                            <hr style="border-color:#2a2a3e;">
+
+                            <div class="d-flex justify-content-between">
+                                <span style="color:#aaa; font-size:13px;">
+                                    <i class="fa fa-clock me-1 text-danger"></i>
+                                    @course.DurationMonths Months
+                                </span>
+                                <span style="color:#e63946; font-weight:600;">
+                                    $@course.Fees
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12 text-center">
+                    <p style="color:#aaa;">No courses available yet.</p>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="/Home/Courses" class="btn btn-outline-primary btn-lg px-5">
+                View All Courses
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- WHY SYMPHONY SECTION -->
+<section style="background:#1d1d2e; padding:80px 0;
+    border-top:1px solid #2a2a3e;
+    border-bottom:1px solid #2a2a3e;">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                Why Choose <span>Symphony?</span>
+            </h2>
+            <div class="section-divider"></div>
+        </div>
+
+        <div class="row g-4 text-center">
+
+            <div class="col-md-4">
+                <div class="card-custom p-4">
+                    <i class="fa fa-chalkboard-teacher fa-3x mb-3"
+                       style="color:#e63946;"></i>
+                    <h5 style="color:#fff;">Expert Trainers</h5>
+                    <p style="color:#aaa; font-size:14px;">
+                        Learn from industry professionals with years
+                        of real-world experience.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-custom p-4">
+                    <i class="fa fa-certificate fa-3x mb-3"
+                       style="color:#e63946;"></i>
+                    <h5 style="color:#fff;">Certification</h5>
+                    <p style="color:#aaa; font-size:14px;">
+                        Get internationally recognized certifications
+                        upon course completion.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-custom p-4">
+                    <i class="fa fa-laptop fa-3x mb-3"
+                       style="color:#e63946;"></i>
+                    <h5 style="color:#fff;">Hands-on Training</h5>
+                    <p style="color:#aaa; font-size:14px;">
+                        Practical labs and real projects to build
+                        your skills effectively.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-custom p-4">
+                    <i class="fa fa-users fa-3x mb-3"
+                       style="color:#e63946;"></i>
+                    <h5 style="color:#fff;">Small Batch Size</h5>
+                    <p style="color:#aaa; font-size:14px;">
+                        Limited seats per batch for personalized
+                        attention and better learning.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-custom p-4">
+                    <i class="fa fa-map-marker-alt fa-3x mb-3"
+                       style="color:#e63946;"></i>
+                    <h5 style="color:#fff;">Multiple Branches</h5>
+                    <p style="color:#aaa; font-size:14px;">
+                        Conveniently located branches across
+                        the city for easy access.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card-custom p-4">
+                    <i class="fa fa-dollar-sign fa-3x mb-3"
+                       style="color:#e63946;"></i>
+                    <h5 style="color:#fff;">Affordable Fees</h5>
+                    <p style="color:#aaa; font-size:14px;">
+                        Quality education at affordable prices
+                        with flexible payment options.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- UPCOMING EXAMS SECTION -->
+<section style="padding:80px 0;">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="section-title">
+                Upcoming <span>Exams</span>
+            </h2>
+            <div class="section-divider"></div>
+        </div>
+
+        @if (ViewBag.Exams != null)
+        {
+            <div class="row g-4">
+                @foreach (var exam in ViewBag.Exams)
+                {
+                <div class="col-md-6">
+                    <div class="card-custom p-4">
+                        <div class="d-flex justify-content-between
+                            align-items-start mb-3">
+                            <h5 style="color:#fff;">@exam.Title</h5>
+                            <span class="badge-primary">Active</span>
+                        </div>
+                        <p style="color:#aaa; font-size:14px;">
+                            @exam.Description
+                        </p>
+                        <hr style="border-color:#2a2a3e;">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <small style="color:#aaa;">Exam Date</small>
+                                <p style="color:#e63946; font-weight:600;
+                                    margin:0;">
+                                    @exam.ExamDate.ToString("dd MMM")
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                <small style="color:#aaa;">Last Date</small>
+                                <p style="color:#e63946; font-weight:600;
+                                    margin:0;">
+                                    @exam.LastDateToApply.ToString("dd MMM")
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                <small style="color:#aaa;">Fees</small>
+                                <p style="color:#e63946; font-weight:600;
+                                    margin:0;">
+                                    $@exam.ExamFees
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <p style="color:#aaa;">No upcoming exams at the moment.</p>
+            </div>
+        }
+
+        <div class="text-center mt-5">
+            <a href="/Home/Apply" class="btn btn-primary btn-lg px-5">
+                <i class="fa fa-user-plus me-2"></i>Apply Now
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA SECTION -->
+<section style="background:linear-gradient(135deg,#e63946,#c1121f);
+    padding:60px 0;">
+    <div class="container text-center">
+        <h2 style="color:#fff; font-weight:700; font-size:36px;">
+            Ready to Start Your IT Journey?
+        </h2>
+        <p style="color:rgba(255,255,255,0.85); font-size:17px; margin:15px 0 30px;">
+            Join thousands of successful students who started their
+            career with Symphony Limited.
+        </p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="/Home/Apply"
+                   class="btn btn-light btn-lg px-5"
+                   style="color:#e63946; font-weight:600;">
+                Apply Now
+            </a>
+            <a href="/Home/Contact"
+                   class="btn btn-outline-light btn-lg px-5">
+                Contact Us
+            </a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,124 @@
+﻿@model SymphonyPortal.Models.ExamResult
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- HEADER -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h4 class="text-white mb-0">
+        <i class="fa fa-edit me-2"></i>Edit Result
+    </h4>
+    <a href="/Admin/ExamResults" class="btn btn-secondary">
+        <i class="fa fa-arrow-left me-2"></i>Back
+    </a>
+</div>
+
+<div class="bg-secondary rounded p-4">
+    <form method="post"
+          asp-action="EditResult"
+          asp-controller="Admin">
+
+        <!-- HIDDEN ID -->
+        <input type="hidden" asp-for="Id" />
+
+        <!-- STUDENT -->
+        <div class="mb-3">
+            <label class="text-white mb-2">Student</label>
+            <select name="StudentId"
+                    class="form-control bg-dark text-white border-0"
+                    required>
+                <option value="">-- Select Student --</option>
+                @* @foreach (var student in ViewBag.Students)
+                {
+                    <option value="@student.Id"
+                            @(student.Id == Model.StudentId
+                                ? "selected" : "")>
+                        @student.Name — @student.RollNumber
+                    </option>
+                } *@
+                @foreach (var student in ViewBag.Students)
+                {
+                    if ((int)student.Id == Model.StudentId)
+                    {
+                        <option value="@student.Id" selected>
+                            @student.Name — @student.RollNumber
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@student.Id">
+                            @student.Name — @student.RollNumber
+                        </option>
+                    }
+                }
+            </select>
+        </div>
+
+        <!-- ROLL NUMBER -->
+        <div class="mb-3">
+            <label class="text-white mb-2">Roll Number</label>
+            <input asp-for="RollNumber"
+                   class="form-control bg-dark text-white border-0" />
+        </div>
+
+        <!-- MARKS -->
+        <div class="mb-3">
+            <label class="text-white mb-2">
+                Marks Obtained (out of 100)
+            </label>
+            <input asp-for="MarksObtained"
+                   type="number"
+                   min="0"
+                   max="100"
+                   class="form-control bg-dark text-white border-0" />
+            <small class="text-muted">
+                50+ = Advanced ($4275) |
+                Below 50 = Basic ($6000)
+            </small>
+        </div>
+
+        <!-- CURRENT CLASS -->
+        <div class="mb-3">
+            <label class="text-white mb-2">
+                Current Class Assigned
+            </label>
+            <input value="@Model.ClassAssigned"
+                   class="form-control bg-dark text-white border-0"
+                   readonly />
+            <small class="text-muted">
+                Auto updates when marks change
+            </small>
+        </div>
+
+        <!-- LAST DATE FOR PAYMENT -->
+        <div class="mb-3">
+            <label class="text-white mb-2">
+                Last Date for Payment
+            </label>
+            <input asp-for="LastDateForPayment"
+                   type="date"
+                   class="form-control bg-dark text-white border-0" />
+        </div>
+
+        <!-- FEEDBACK -->
+        <div class="mb-4">
+            <label class="text-white mb-2">Feedback</label>
+            <textarea asp-for="Feedback"
+                      class="form-control bg-dark text-white border-0"
+                      rows="3">
+            </textarea>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save me-2"></i>Update Result
+            </button>
+            <a href="/Admin/ExamResults" class="btn btn-secondary">
+                Cancel
+            </a>
+        </div>
+
+    </form>
+</div>

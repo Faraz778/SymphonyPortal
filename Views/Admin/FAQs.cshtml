@@ -1,0 +1,112 @@
+﻿@model List<SymphonyPortal.Models.FAQ>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- HEADER -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h4 class="text-white mb-0">
+        <i class="fa fa-question-circle me-2"></i>FAQs
+    </h4>
+    <a href="/Admin/CreateFAQ" class="btn btn-primary">
+        <i class="fa fa-plus me-2"></i>Add New FAQ
+    </a>
+</div>
+
+<!-- SUCCESS MESSAGE -->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mb-4">
+        <i class="fa fa-check-circle me-2"></i>
+        @TempData["success"]
+        <button type="button" class="btn-close"
+                data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- TABLE -->
+<div class="bg-secondary rounded p-4">
+    <div class="table-responsive">
+        <table class="table text-start align-middle
+            table-bordered table-hover mb-0">
+            <thead>
+                <tr class="text-white">
+                    <th>#</th>
+                    <th>Question</th>
+                    <th>Answer</th>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count == 0)
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No FAQs added yet
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var faq in Model)
+                    {
+                        <tr>
+                            <td>@faq.Id</td>
+                            <td>
+                                @if (faq.Question.Length > 50)
+                                {
+                                    @faq.Question.Substring(0, 50)
+                                    <span>...</span>
+                                }
+                                else
+                                {
+                                    @faq.Question
+                                }
+                            </td>
+                            <td>
+                                @if (faq.Answer.Length > 50)
+                                {
+                                    @faq.Answer.Substring(0, 50)
+                                    <span>...</span>
+                                }
+                                else
+                                {
+                                    @faq.Answer
+                                }
+                            </td>
+                            <td>@faq.DisplayOrder</td>
+                            <td>
+                                @if (faq.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Inactive
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Admin/EditFAQ/@faq.Id"
+                                       class="btn btn-sm btn-primary me-1">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                <a href="/Admin/DeleteFAQ/@faq.Id"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Delete this FAQ?')">
+                                    <i class="fa fa-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

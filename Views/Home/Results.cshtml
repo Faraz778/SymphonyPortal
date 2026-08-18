@@ -1,0 +1,229 @@
+﻿@model SymphonyPortal.Models.ExamResult
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- PAGE HEADER -->
+<section style="background:#1d1d2e; padding:60px 0;
+    border-bottom:2px solid #e63946;">
+    <div class="container text-center">
+        <h1 class="section-title">
+            Check Your <span>Result</span>
+        </h1>
+        <p style="color:#aaa; font-size:16px;">
+            Enter your roll number to check your entrance exam result.
+        </p>
+    </div>
+</section>
+
+<!-- SEARCH SECTION -->
+<section style="padding:80px 0;">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <!-- SEARCH FORM -->
+                <div class="card-custom p-4 mb-4">
+                    <h5 style="color:#fff; margin-bottom:20px;">
+                        <i class="fa fa-search me-2"
+                           style="color:#e63946;"></i>
+                        Search Result
+                    </h5>
+
+                    <form method="post" asp-action="Results"
+                          asp-controller="Home">
+
+                        <div class="mb-3">
+                            <label style="color:#aaa; margin-bottom:8px;">
+                                Roll Number
+                            </label>
+                            <input type="text"
+                                   name="rollNumber"
+                                   class="form-control form-control-dark"
+                                   placeholder="e.g. SYM-2025-0001"
+                                   required />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fa fa-search me-2"></i>
+                            Check Result
+                        </button>
+
+                    </form>
+                </div>
+
+                <!-- ERROR MESSAGE -->
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert-custom p-3 text-center">
+                        <i class="fa fa-exclamation-circle me-2"
+                           style="color:#e63946;"></i>
+                        @ViewBag.Error
+                    </div>
+                }
+
+            </div>
+        </div>
+
+        <!-- RESULT CARD -->
+        @if (Model != null)
+        {
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-8">
+                    <div class="card-custom p-4">
+
+                        <!-- RESULT HEADER -->
+                        <div class="text-center mb-4">
+                            <div style="background:#e63946; width:70px;
+                                height:70px; border-radius:50%;
+                                display:flex; align-items:center;
+                                justify-content:center;
+                                margin:0 auto 15px;">
+                                <i class="fa fa-trophy"
+                                   style="color:#fff; font-size:30px;"></i>
+                            </div>
+                            <h4 style="color:#fff;">Result Card</h4>
+                            <span class="badge-primary">
+                                @Model.RollNumber
+                            </span>
+                        </div>
+
+                        <hr style="border-color:#2a2a3e;">
+
+                        <!-- STUDENT INFO -->
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <small style="color:#aaa;">Student Name</small>
+                                <p style="color:#fff; font-weight:600;
+                                    margin:0;">
+                                    @Model.Student?.Name
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <small style="color:#aaa;">Roll Number</small>
+                                <p style="color:#e63946; font-weight:600;
+                                    margin:0;">
+                                    @Model.RollNumber
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <small style="color:#aaa;">Marks Obtained</small>
+                                <p style="color:#fff; font-weight:600;
+                                    margin:0; font-size:22px;">
+                                    @Model.MarksObtained
+                                    <span style="font-size:14px;
+                                    color:#aaa;">/ 100</span>
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <small style="color:#aaa;">Class Assigned</small>
+                                <p style="margin:0;">
+                                    @if (Model.ClassAssigned == "Advanced")
+                                    {
+                                        <span class="badge bg-success
+                                            fs-6 px-3 py-2">
+                                            Advanced
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning
+                                            fs-6 px-3 py-2">
+                                            Basic
+                                        </span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <small style="color:#aaa;">Course Fees</small>
+                                <p style="color:#e63946; font-weight:700;
+                                    font-size:20px; margin:0;">
+                                    $@Model.CourseFees
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <small style="color:#aaa;">
+                                    Last Date for Payment
+                                </small>
+                                <p style="color:#fff; font-weight:600;
+                                    margin:0;">
+                                    @Model.LastDateForPayment
+                                    
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FEEDBACK -->
+                        @if (!string.IsNullOrEmpty(Model.Feedback))
+                        {
+                            <hr style="border-color:#2a2a3e;">
+                            <div>
+                                <small style="color:#aaa;">
+                                    Faculty Feedback
+                                </small>
+                                <p style="color:#fff; margin:5px 0 0;">
+                                    @Model.Feedback
+                                </p>
+                            </div>
+                        }
+
+                        <hr style="border-color:#2a2a3e;">
+
+                        <!-- CLASS INFO -->
+                        <div style="background:#13131f; border-radius:10px;
+                            padding:15px;">
+                            @if (Model.ClassAssigned == "Advanced")
+                            {
+                                <p style="color:#aaa; margin:0;
+                                    font-size:14px;">
+                                    <i class="fa fa-info-circle me-2"
+                                       style="color:#e63946;"></i>
+                                    You have been placed in
+                                    <strong style="color:#fff;">
+                                        Advanced Class
+                                    </strong>
+                                    — 4 months certification program.
+                                    Pay your fees before
+                                    <strong style="color:#e63946;">
+                                        @Model.LastDateForPayment
+                                       
+                                    </strong>
+                                    to confirm your seat.
+                                </p>
+                            }
+                            else
+                            {
+                                <p style="color:#aaa; margin:0;
+                                    font-size:14px;">
+                                    <i class="fa fa-info-circle me-2"
+                                       style="color:#e63946;"></i>
+                                    You have been placed in
+                                    <strong style="color:#fff;">
+                                        Basic Class
+                                    </strong>
+                                    — 6 months training program.
+                                    Pay your fees before
+                                    <strong style="color:#e63946;">
+                                        @Model.LastDateForPayment
+                                        .ToString("dd MMM yyyy")
+                                    </strong>
+                                    to confirm your seat.
+                                </p>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</section>

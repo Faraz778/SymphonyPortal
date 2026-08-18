@@ -1,0 +1,250 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- PAGE HEADER -->
+<section style="background:#1d1d2e; padding:60px 0;
+                border-bottom:2px solid #e63946;">
+    <div class="container text-center">
+        <h1 class="section-title">
+            Apply <span>Now</span>
+        </h1>
+        <p style="color:#aaa; font-size:16px;">
+            Fill the form below to apply for entrance exam.
+        </p>
+    </div>
+</section>
+
+<!-- APPLY FORM -->
+<section style="padding:80px 0;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <!-- SUCCESS MESSAGE -->
+                @if (TempData["success"] != null)
+                {
+                    <div class="alert-custom p-4 mb-4 text-center">
+                        <i class="fa fa-check-circle fa-2x mb-2"
+                           style="color:#e63946; display:block;"></i>
+                        <h5 style="color:#fff;">Application Submitted!</h5>
+                        <p style="color:#aaa; margin:0;">
+                            @TempData["success"]
+                        </p>
+                    </div>
+                }
+
+                <div class="card-custom p-4">
+
+                    <h5 style="color:#fff; margin-bottom:25px;">
+                        <i class="fa fa-user-plus me-2"
+                           style="color:#e63946;"></i>
+                        Application Form
+                    </h5>
+
+                    <form method="post"
+                          asp-action="Apply"
+                          asp-controller="Home">
+
+                        <!-- PERSONAL INFO -->
+                        <h6 style="color:#e63946; margin-bottom:15px;">
+                            <i class="fa fa-user me-2"></i>
+                            Personal Information
+                        </h6>
+
+                        <div class="row g-3 mb-4">
+
+                            <!-- NAME -->
+                            <div class="col-md-6">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Full Name *
+                                </label>
+                                <input name="Name"
+                                       class="form-control form-control-dark"
+                                       placeholder="Enter full name"
+                                       required />
+                            </div>
+
+                            <!-- EMAIL -->
+                            <div class="col-md-6">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Email Address *
+                                </label>
+                                <input name="Email"
+                                       type="email"
+                                       class="form-control form-control-dark"
+                                       placeholder="Enter email"
+                                       required />
+                            </div>
+
+                            <!-- PHONE -->
+                            <div class="col-md-6">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Phone Number *
+                                </label>
+                                <input name="Phone"
+                                       class="form-control form-control-dark"
+                                       placeholder="03XXXXXXXXX"
+                                       required />
+                            </div>
+
+                            <!-- ADDRESS -->
+                            <div class="col-md-6">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Address *
+                                </label>
+                                <input name="Address"
+                                       class="form-control form-control-dark"
+                                       placeholder="Enter address"
+                                       required />
+                            </div>
+
+                        </div>
+
+                        <hr style="border-color:#2a2a3e; margin-bottom:20px;">
+
+                        <!-- EXAM & COURSE -->
+                        <h6 style="color:#e63946; margin-bottom:15px;">
+                            <i class="fa fa-file-alt me-2"></i>
+                            Exam & Course
+                        </h6>
+
+                        <div class="row g-3 mb-4">
+
+                            <!-- EXAM -->
+                            <div class="col-md-6">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Select Exam *
+                                </label>
+                                <select name="ExamId"
+                                        class="form-control form-control-dark"
+                                        required>
+                                    <option value="">-- Select Exam --</option>
+                                    @foreach (var exam in ViewBag.Exams)
+                                    {
+                                        <option value="@exam.Id">
+                                            @exam.Title
+                                            ($@exam.ExamFees)
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+
+                            <!-- COURSE -->
+                            <div class="col-md-6">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Select Course *
+                                </label>
+                                <select name="CourseId"
+                                        class="form-control form-control-dark"
+                                        required>
+                                    <option value="">-- Select Course --</option>
+                                    @foreach (var course in ViewBag.Courses)
+                                    {
+                                        <option value="@course.Id">
+                                            @course.Name
+                                            ($@course.Fees)
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <hr style="border-color:#2a2a3e; margin-bottom:20px;">
+
+                        <!-- PAYMENT INFO -->
+                        <h6 style="color:#e63946; margin-bottom:15px;">
+                            <i class="fa fa-money-bill me-2"></i>
+                            Payment Information
+                        </h6>
+
+                        <div class="row g-3 mb-4">
+
+                            <!-- PAYMENT METHOD -->
+                            <div class="col-md-6">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Payment Method *
+                                </label>
+                                <select name="PaymentMethod"
+                                        class="form-control form-control-dark"
+                                        id="paymentMethod"
+                                        onchange="showPaymentFields()"
+                                        required>
+                                    <option value="">-- Select Method --</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="DD">Demand Draft (DD)</option>
+                                </select>
+                            </div>
+
+                            <!-- RECEIPT NUMBER -->
+                            <div class="col-md-6" id="receiptDiv">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Receipt / Cheque / DD Number
+                                </label>
+                                <input name="ReceiptNumber"
+                                       class="form-control form-control-dark"
+                                       placeholder="Enter number" />
+                            </div>
+
+                            <!-- CHEQUE DD NUMBER -->
+                            <div class="col-md-6 d-none" id="chequeDiv">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Cheque / DD Number
+                                </label>
+                                <input name="ChequeOrDDNumber"
+                                       class="form-control form-control-dark"
+                                       placeholder="Enter cheque or DD number" />
+                            </div>
+
+                            <!-- BANK DETAILS -->
+                            <div class="col-md-6 d-none" id="bankDiv">
+                                <label style="color:#aaa; margin-bottom:8px;">
+                                    Bank Name & Branch
+                                </label>
+                                <input name="BankDetails"
+                                       class="form-control form-control-dark"
+                                       placeholder="e.g. HBL, Main Branch" />
+                            </div>
+
+                        </div>
+
+                        <!-- SUBMIT -->
+                        <div class="d-flex gap-3 mt-2">
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg px-5">
+                                <i class="fa fa-paper-plane me-2"></i>
+                                Submit Application
+                            </button>
+                            <a href="/Home/Exams"
+                               class="btn btn-outline-primary btn-lg px-4">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript — Payment fields show/hide -->
+<script>
+function showPaymentFields() {
+    var method = document.getElementById('paymentMethod').value;
+
+    var chequeDiv = document.getElementById('chequeDiv');
+    var bankDiv   = document.getElementById('bankDiv');
+
+    if (method === 'Cheque' || method === 'DD') {
+        chequeDiv.classList.remove('d-none');
+        bankDiv.classList.remove('d-none');
+    } else {
+        chequeDiv.classList.add('d-none');
+        bankDiv.classList.add('d-none');
+    }
+}
+</script>

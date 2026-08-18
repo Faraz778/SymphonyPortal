@@ -1,0 +1,96 @@
+﻿@model List<SymphonyPortal.Models.Branch>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- HEADER -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h4 class="text-white mb-0">
+        <i class="fa fa-map-marker-alt me-2"></i>Branches
+    </h4>
+    <a href="/Admin/CreateBranch" class="btn btn-primary">
+        <i class="fa fa-plus me-2"></i>Add New Branch
+    </a>
+</div>
+
+<!-- SUCCESS MESSAGE -->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mb-4">
+        <i class="fa fa-check-circle me-2"></i>
+        @TempData["success"]
+        <button type="button" class="btn-close"
+                data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- TABLE -->
+<div class="bg-secondary rounded p-4">
+    <div class="table-responsive">
+        <table class="table text-start align-middle
+            table-bordered table-hover mb-0">
+            <thead>
+                <tr class="text-white">
+                    <th>#</th>
+                    <th>Branch Name</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count == 0)
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">
+                            No branches added yet
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var branch in Model)
+                    {
+                        <tr>
+                            <td>@branch.Id</td>
+                            <td>@branch.Name</td>
+                            <td>@branch.City</td>
+                            <td>@branch.Address</td>
+                            <td>@branch.Phone</td>
+                            <td>@branch.Email</td>
+                            <td>
+                                @if (branch.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Inactive
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/Admin/EditBranch/@branch.Id"
+                                       class="btn btn-sm btn-primary me-1">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                <a href="/Admin/DeleteBranch/@branch.Id"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Delete this branch?')">
+                                    <i class="fa fa-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

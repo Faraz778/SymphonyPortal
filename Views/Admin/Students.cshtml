@@ -1,0 +1,122 @@
+﻿@model List<SymphonyPortal.Models.Student>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- HEADER -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h4 class="text-white mb-0">
+        <i class="fa fa-users me-2"></i>Students
+    </h4>
+</div>
+
+<!-- SUCCESS MESSAGE -->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mb-4">
+        <i class="fa fa-check-circle me-2"></i>
+        @TempData["success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- TABLE -->
+<div class="bg-secondary rounded p-4">
+    <div class="table-responsive">
+        <table class="table text-start align-middle
+                       table-bordered table-hover mb-0">
+            <thead>
+                <tr class="text-white">
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Exam</th>
+                    <th>Course</th>
+                    <th>Roll No</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count == 0)
+                {
+                    <tr>
+                        <td colspan="9" class="text-center">
+                            No students yet
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var s in Model)
+                    {
+                        <tr>
+                            <td>@s.Id</td>
+                            <td>@s.Name</td>
+                            <td>@s.Email</td>
+                            <td>@s.Phone</td>
+                            <td>@s.Exam?.Title</td>
+                            <td>@s.Course?.Name</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(s.RollNumber))
+                                {
+                                    <span class="badge bg-info">
+                                        @s.RollNumber
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not assigned</span>
+                                }
+                            </td>
+                            <td>
+                                <span class="badge 
+                                    @(s.Status == "Accepted" ? "bg-success" : 
+                                      s.Status == "Rejected" ? "bg-danger" : 
+                                      "bg-warning")">
+                                    @s.Status
+                                </span>
+                            </td>
+                            <td>
+                                <!-- DETAIL -->
+                                <a href="/Admin/StudentDetail/@s.Id"
+                                   class="btn btn-sm btn-info me-1">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+
+                                <!-- ACCEPT -->
+                                @if (s.Status != "Accepted")
+                                {
+                                    <a href="/Admin/UpdateStatus/@s.Id?status=Accepted"
+                                       class="btn btn-sm btn-success me-1"
+                                       onclick="return confirm('Accept this student?')">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                }
+
+                                <!-- REJECT -->
+                                @if (s.Status != "Rejected")
+                                {
+                                    <a href="/Admin/UpdateStatus/@s.Id?status=Rejected"
+                                       class="btn btn-sm btn-warning me-1"
+                                       onclick="return confirm('Reject this student?')">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                }
+
+                                <!-- DELETE -->
+                                <a href="/Admin/DeleteStudent/@s.Id"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Delete this student?')">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

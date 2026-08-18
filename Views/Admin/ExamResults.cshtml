@@ -1,0 +1,103 @@
+﻿@model List<SymphonyPortal.Models.ExamResult>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- HEADER -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h4 class="text-white mb-0">
+        <i class="fa fa-poll me-2"></i>Exam Results
+    </h4>
+    <a href="/Admin/CreateResult" class="btn btn-primary">
+        <i class="fa fa-plus me-2"></i>Add Result
+    </a>
+</div>
+
+<!-- SUCCESS MESSAGE -->
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mb-4">
+        <i class="fa fa-check-circle me-2"></i>
+        @TempData["success"]
+        <button type="button" class="btn-close"
+                data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<!-- TABLE -->
+<div class="bg-secondary rounded p-4">
+    <div class="table-responsive">
+        <table class="table text-start align-middle
+            table-bordered table-hover mb-0">
+            <thead>
+                <tr class="text-white">
+                    <th>#</th>
+                    <th>Student Name</th>
+                    <th>Roll Number</th>
+                    <th>Marks</th>
+                    <th>Class</th>
+                    <th>Fees</th>
+                    <th>Payment Deadline</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count == 0)
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">
+                            No results added yet
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var result in Model)
+                    {
+                        <tr>
+                            <td>@result.Id</td>
+                            <td>@result.Student?.Name</td>
+                            <td>
+                                <span class="badge bg-info">
+                                    @result.RollNumber
+                                </span>
+                            </td>
+                            <td>@result.MarksObtained / 100</td>
+                            <td>
+                                @if (result.ClassAssigned == "Advanced")
+                                {
+                                    <span class="badge bg-success">
+                                        Advanced
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning">
+                                        Basic
+                                    </span>
+                                }
+                            </td>
+                            <td>$@result.CourseFees</td>
+                            <td>
+                                @result.LastDateForPayment
+                                .ToString("dd MMM yyyy")
+                            </td>
+                            <td>
+                                <a href="/Admin/EditResult/@result.Id"
+                                       class="btn btn-sm btn-primary me-1">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="/Admin/DeleteResult/@result.Id"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Delete this result?')">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

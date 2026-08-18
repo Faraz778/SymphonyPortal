@@ -1,0 +1,84 @@
+﻿@model SymphonyPortal.Models.Course
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- HEADER -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h4 class="text-white mb-0">
+        <i class="fa fa-plus me-2"></i>Add New Course
+    </h4>
+    <a href="/Admin/Courses" class="btn btn-secondary">
+        <i class="fa fa-arrow-left me-2"></i>Back to Courses
+    </a>
+</div>
+
+<!-- FORM -->
+<div class="bg-secondary rounded p-4">
+    <form method="post" asp-action="CreateCourse" asp-controller="Admin">
+
+        <!-- NAME -->
+        <div class="mb-3">
+            <label class="text-white mb-2">Course Name</label>
+            <input asp-for="Name"
+                   class="form-control bg-dark text-white border-0"
+                   placeholder="Enter course name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <!-- TOPICS -->
+        <div class="mb-3">
+            <label class="text-white mb-2">Topics Covered</label>
+            <textarea asp-for="Topics"
+                      class="form-control bg-dark text-white border-0"
+                      rows="4"
+                          placeholder="Enter topics covered in this course">
+            </textarea>
+                <span asp-validation-for="Topics" class="text-danger"></span>
+            </div>
+
+            <!-- FEES -->
+            <div class="mb-3">
+                <label class="text-white mb-2">Course Fees ($)</label>
+                <input asp-for="Fees"
+                       type="number"
+                       class="form-control bg-dark text-white border-0"
+                       placeholder="Enter fees" />
+                <span asp-validation-for="Fees" class="text-danger"></span>
+            </div>
+
+            <!-- DURATION -->
+            <div class="mb-3">
+                <label class="text-white mb-2">Duration (Months)</label>
+                <input asp-for="DurationMonths"
+                       type="number"
+                       class="form-control bg-dark text-white border-0"
+                       placeholder="Enter duration in months" />
+                <span asp-validation-for="DurationMonths" class="text-danger"></span>
+            </div>
+
+            <!-- IS ACTIVE -->
+            <div class="mb-4">
+                <div class="form-check">
+                    <input asp-for="IsActive"
+                           class="form-check-input"
+                           type="checkbox" />
+                    <label class="form-check-label text-white">
+                        Active Course
+                    </label>
+                </div>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save me-2"></i>Save Course
+                </button>
+                <a href="/Admin/Courses" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>

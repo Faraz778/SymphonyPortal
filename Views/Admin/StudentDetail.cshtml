@@ -1,0 +1,168 @@
+﻿@model SymphonyPortal.Models.Student
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- HEADER -->
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h4 class="text-white mb-0">
+        <i class="fa fa-user me-2"></i>Student Detail
+    </h4>
+    <a href="/Admin/Students" class="btn btn-secondary">
+        <i class="fa fa-arrow-left me-2"></i>Back
+    </a>
+</div>
+
+<div class="row g-4">
+
+    <!-- PERSONAL INFO -->
+    <div class="col-md-6">
+        <div class="bg-secondary rounded p-4">
+            <h6 class="text-primary mb-3">
+                <i class="fa fa-user me-2"></i>Personal Information
+            </h6>
+
+            <table class="table table-borderless text-white mb-0">
+                <tr>
+                    <td class="text-muted" width="40%">Name</td>
+                    <td>@Model.Name</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Email</td>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Phone</td>
+                    <td>@Model.Phone</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Address</td>
+                    <td>@Model.Address</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Applied Date</td>
+                    <td>@Model.AppliedDate.ToString("dd MMM yyyy")</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- EXAM & COURSE INFO -->
+    <div class="col-md-6">
+        <div class="bg-secondary rounded p-4">
+            <h6 class="text-primary mb-3">
+                <i class="fa fa-file-alt me-2"></i>Exam & Course
+            </h6>
+
+            <table class="table table-borderless text-white mb-0">
+                <tr>
+                    <td class="text-muted" width="40%">Exam</td>
+                    <td>@Model.Exam?.Title</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Course</td>
+                    <td>@Model.Course?.Name</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Roll Number</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(Model.RollNumber))
+                        {
+                            <span class="badge bg-info">@Model.RollNumber</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Not assigned yet</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Status</td>
+                    <td>
+                        <span class="badge
+                            @(Model.Status == "Accepted" ? "bg-success" :
+                                                            Model.Status == "Rejected" ? "bg-danger" :
+                                                            "bg-warning")">
+                            @Model.Status
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- PAYMENT INFO -->
+    <div class="col-md-12">
+        <div class="bg-secondary rounded p-4">
+            <h6 class="text-primary mb-3">
+                <i class="fa fa-money-bill me-2"></i>Payment Information
+            </h6>
+
+            <table class="table table-borderless text-white mb-0">
+                <tr>
+                    <td class="text-muted" width="20%">Payment Method</td>
+                    <td>@Model.PaymentMethod</td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Receipt Number</td>
+                    <td>
+                        @(string.IsNullOrEmpty(Model.ReceiptNumber)
+                            ? "N/A" : Model.ReceiptNumber)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Cheque/DD Number</td>
+                    <td>
+                        @(string.IsNullOrEmpty(Model.ChequeOrDDNumber)
+                            ? "N/A" : Model.ChequeOrDDNumber)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-muted">Bank Details</td>
+                    <td>
+                        @(string.IsNullOrEmpty(Model.BankDetails)
+                            ? "N/A" : Model.BankDetails)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="col-12">
+        <div class="bg-secondary rounded p-4">
+            <h6 class="text-primary mb-3">
+                <i class="fa fa-cog me-2"></i>Actions
+            </h6>
+            <div class="d-flex gap-2">
+
+                @if (Model.Status != "Accepted")
+                {
+                    <a href="/Admin/UpdateStatus/@Model.Id?status=Accepted"
+                           class="btn btn-success"
+                           onclick="return confirm('Accept this student?')">
+                        <i class="fa fa-check me-2"></i>Accept
+                    </a>
+                }
+
+                @if (Model.Status != "Rejected")
+                {
+                    <a href="/Admin/UpdateStatus/@Model.Id?status=Rejected"
+                           class="btn btn-warning"
+                           onclick="return confirm('Reject this student?')">
+                        <i class="fa fa-times me-2"></i>Reject
+                    </a>
+                }
+
+                <a href="/Admin/DeleteStudent/@Model.Id"
+                       class="btn btn-danger"
+                       onclick="return confirm('Delete this student?')">
+                    <i class="fa fa-trash me-2"></i>Delete
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+</div>
