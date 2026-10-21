@@ -71,3 +71,8 @@ wwwroot/lib/** linguist-vendored
 *.css linguist-detectable=false
 *.scss linguist-detectable=false
 *.sass linguist-detectable=false
+
+# Exclude JavaScript from language stats
+*.js linguist-detectable=false
+*.min.js linguist-vendored
+wwwroot/js/** linguist-vendored
