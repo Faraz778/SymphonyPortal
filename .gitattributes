@@ -61,3 +61,13 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# Exclude third-party libraries from language stats
+wwwroot/lib/** linguist-vendored
+
+# Exclude views and styles from language stats
+*.cshtml linguist-detectable=false
+*.html linguist-detectable=false
+*.css linguist-detectable=false
+*.scss linguist-detectable=false
+*.sass linguist-detectable=false
